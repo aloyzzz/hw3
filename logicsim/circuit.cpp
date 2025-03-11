@@ -201,6 +201,8 @@ void Circuit::run(std::ostream& os)
 
 void Circuit::startUml(std::ostream& os)
 {
+    //COUT
+    std::cout<<"starting"<<std::endl;
 	os << "@startuml" << std::endl;
     for(auto w : m_wires)
     {
