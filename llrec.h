@@ -1,5 +1,6 @@
 #ifndef LLREC_H
 #define LLREC_H
+#include <cstddef>
 #ifndef NULL
 #define NULL 0
 #endif
@@ -72,6 +73,8 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred);
 
+
+
 //*****************************************************************************
 // Since template implementations should be in a header file, we will
 // implement the above function now.
@@ -80,11 +83,22 @@ Node* llfilter(Node* head, Comp pred);
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred)
 {
-    //*********************************************
-    // Provide your implementation below
-    //*********************************************
+    if(head==NULL) return NULL;
+    // else if(pred(head->val)==true)
+    // {
+    //     head->next=llfilter(head->next,pred);
+    //     return head;
+    // }
+    else if(pred(head->val)==true)
+    {
+        Node* temp = head;
+        head=head->next;
+        delete temp;
+        return llfilter(head->next, pred);
+    }
 
-
+    head->next=llfilter(head->next,pred);
+    return head;
 }
 
 #endif

@@ -1,7 +1,10 @@
 #ifndef HEAP_H
 #define HEAP_H
+#include <algorithm>
+#include <cstddef>
 #include <functional>
 #include <stdexcept>
+#include <vector>
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -63,12 +66,52 @@ private:
   /// Add whatever helper functions and data members you need below
 
 
-
-
+    void heapify(int loc);
+    void trickleup(int loc);
+    int getparent(int index) const { return (index - 1) / m; }
+    std::vector<T> vec;  // The underlying vector storing heap elements
+    int m;                // The m-ary value
+    PComparator comparator; 
 };
 
 // Add implementation of member functions here
 
+//CTOR
+template <typename T, typename PComparator>
+Heap<T,PComparator>::Heap(int m, PComparator c)
+{
+    this->m=m;
+    comparator=c;
+}
+
+template <typename T, typename PComparator>
+Heap<T,PComparator>::~Heap()
+{
+  
+}
+
+
+// Empty check
+template <typename T, typename PComparator>
+bool Heap<T,PComparator>::empty() const
+{
+    return vec.empty();
+}
+
+// Size Check
+template <typename T, typename PComparator>
+size_t Heap<T,PComparator>::size() const
+{
+    return vec.size();
+}
+
+//Push
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::push(const T& item)
+{
+  vec.push_back(item);
+  trickleup(vec.size()-1);
+}
 
 // We will start top() for you to handle the case of 
 // calling top on an empty heap
@@ -78,17 +121,11 @@ T const & Heap<T,PComparator>::top() const
   // Here we use exceptions to handle the case of trying
   // to access the top element of an empty heap
   if(empty()){
-    // ================================
-    // throw the appropriate exception
-    // ================================
-
-
+    throw std::underflow_error("Top empty");
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
-
-
-
+  return vec[0];
 }
 
 
@@ -97,19 +134,52 @@ T const & Heap<T,PComparator>::top() const
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::pop()
 {
-  if(empty()){
-    // ================================
-    // throw the appropriate exception
-    // ================================
-
-
+  if(this->empty()){
+    throw std::underflow_error("Top empty");
   }
-
-
-
+  std::swap(vec[0],vec.back());
+  vec.pop_back();
+  if(!(this->size()>1))
+  {
+    heapify(0);
+  }
 }
 
+//Heapify
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::heapify(int loc)
+{
+  while(true)
+  {
+    int priority = loc;
+    for(int i=0; i<m;i++)
+    {
+      int child = m*loc+(i+1);
+      if(child<this->size()&&comparator(vec[child],vec[priority])) priority=child;
+    }
+    if(priority!=loc)
+    {
+      std::swap(vec[loc],vec[priority]);
+      loc=priority;
+    }
+  }
+}
 
+//trickle
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::trickleup(int loc)
+{
+  while(loc>0)
+  {
+    size_t parent = (loc-1)/m;
+    if(comparator(vec[loc],vec[parent]))
+    {
+      std::swap(vec[loc],vec[parent]);
+      loc=parent;
+    }
+    else break;
+  }
+}
 
 #endif
 

@@ -62,17 +62,35 @@ void dealloc(Node* head)
     }
 }
 
+class compare{
+    public:
+    compare()
+    {
+        target = 9;
+    }
+
+    bool operator()(int a)
+    {
+        if(a>target) return true;
+        else return false;
+    }
+
+    private:
+    int target;
+};
+
+
+
+
 // -----------------------------------------------
 //   Add any helper functions or
 //   function object struct declarations
 // -----------------------------------------------
 
-
-
-
-
 int main(int argc, char* argv[])
 {
+    Node* smaller;
+    Node* larger;
     if(argc < 2) {
         cout << "Please provide an input file" << endl;
         return 1;
@@ -86,10 +104,10 @@ int main(int argc, char* argv[])
     print(head);
 
     // Test out your linked list code
+    head=llfilter(head, compare());
+    print(head);
+   
 
-
-
-    
     return 0;
 
 }
