@@ -139,7 +139,7 @@ void Heap<T,PComparator>::pop()
   }
   std::swap(vec[0],vec.back());
   vec.pop_back();
-  if(!(this->size()>1))
+  if(!(this->empty))
   {
     heapify(0);
   }
@@ -157,12 +157,12 @@ void Heap<T,PComparator>::heapify(int loc)
       int child = m*loc+(i+1);
       if(child<this->size()&&comparator(vec[child],vec[priority])) priority=child;
     }
+    if(priority==loc) break;
     if(priority!=loc)
     {
       std::swap(vec[loc],vec[priority]);
       loc=priority;
     }
-    if(priority==loc) break;
   }
 }
 
