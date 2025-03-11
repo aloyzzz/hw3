@@ -162,6 +162,7 @@ void Heap<T,PComparator>::heapify(int loc)
       std::swap(vec[loc],vec[priority]);
       loc=priority;
     }
+    if(priority==loc) break;
   }
 }
 
