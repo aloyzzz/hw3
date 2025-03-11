@@ -1,5 +1,4 @@
 #include "llrec.h"
-#include <__config>
 
 //*********************************************
 // Provide your implementation of llpivot below
