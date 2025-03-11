@@ -94,7 +94,7 @@ Node* llfilter(Node* head, Comp pred)
         Node* temp = head;
         head=head->next;
         delete temp;
-        return llfilter(head->next, pred);
+        return llfilter(head, pred);
     }
 
     head->next=llfilter(head->next,pred);
