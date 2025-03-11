@@ -106,6 +106,8 @@ int main(int argc, char* argv[])
     // Test out your linked list code
     head=llfilter(head, compare());
     print(head);
+
+    
    
 
     return 0;
