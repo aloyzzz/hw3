@@ -139,7 +139,7 @@ void Heap<T,PComparator>::pop()
   }
   std::swap(vec[0],vec.back());
   vec.pop_back();
-  if(!(this->empty))
+  if(!(this->empty()))
   {
     heapify(0);
   }
