@@ -1,6 +1,6 @@
 #ifndef GATE_H
 #define GATE_H
-#include <_types/_uint64_t.h>
+// #include <_types/_uint64_t.h>
 #include <vector>
 #include <queue>
 #include <tuple>
